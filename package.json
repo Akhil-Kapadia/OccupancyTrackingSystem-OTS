@@ -1,0 +1,30 @@
+{
+  "name": "occupancytrackingsystem-ots",
+  "version": "1.0.0",
+  "description": "Occupancy Tracking System (OTS) database and webapp system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akhil-Kapadia/OccupancyTrackingSystem-OTS.git"
+  },
+  "keywords": [
+    "PostGRE",
+    "Database",
+    "Occupancy",
+    "Heroku",
+    "Express",
+    "node.js"
+  ],
+  "author": "Akhil Kapadia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akhil-Kapadia/OccupancyTrackingSystem-OTS/issues"
+  },
+  "homepage": "https://github.com/Akhil-Kapadia/OccupancyTrackingSystem-OTS#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
