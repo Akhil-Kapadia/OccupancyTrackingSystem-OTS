@@ -8,4 +8,7 @@ class Occupancy(models.Model):
     Time = models.DateTimeField(auto_now=True)
     Entry = models.BooleanField()
     People = models.PositiveSmallIntegerField(default=1)
-    CurrentOccupany = models.PositiveSmallIntegerField(null=True)
+    CurrentOccupancy = models.PositiveSmallIntegerField(null=True)
+
+    class Meta:
+        db_table = "Occupancy"
