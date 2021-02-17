@@ -5,7 +5,7 @@ import datetime
 from .models import Occupancy
 
 def home(request):
-    currentOccupancy = 0;
+    currentOccupancy = Occupancy.CurrentOccupancy
     now = datetime.datetime.now()
     return render(request, "home.html",context=
     {
