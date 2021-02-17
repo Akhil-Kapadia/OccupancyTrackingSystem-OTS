@@ -10,5 +10,9 @@ class Occupancy(models.Model):
     People = models.PositiveSmallIntegerField(default=1)
     CurrentOccupancy = models.PositiveSmallIntegerField(null=True)
 
+    def getOccupancy(self):
+        return self.CurrentOccupancy
+
     class Meta:
         db_table = "Occupancy"
+    
