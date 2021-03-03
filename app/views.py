@@ -6,12 +6,12 @@ from .models import Occupancy
 from .forms import AddEntry
 
 def home(request):
-    currentOccupancy = Occupancy.objects.latest('Time').getOccupancy() / 1000
+    currentOccupancy = Occupancy.objects.latest('Time').getOccupancy()
     now = dt.datetime.now()
 
     return render(request, "home.html", context=
     {
         "currentOccupancy": currentOccupancy,
         "datetime" : now,
-        'OccupancyPercentage' : currentOccupancy
+        'OccupancyPercentage' : currentOccupancy / 1000
     })
