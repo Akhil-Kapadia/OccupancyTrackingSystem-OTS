@@ -4,19 +4,37 @@
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="style.css">
-        <center><img src="templates/images/OTS-logo.png"></center>
 
         <title>
             OTS - The Occupancy Detection System
         </title>
     </head>
     <body>
-        <header>
-        </header>
-        <center><h1>OTS - The Occupancy Detection System</h1></center>
-        <hr>
-        <h2>Current Occupancy: {{currentOccupancy}} which is {{OccupancyPercentage}}% full!</h2>
-        <p>Today's Date and Time {{datetime}}</p>
-        
+        <div class="container">
+            <div class="menu">
+                <ul>
+                    <li class="logo"><img src="templates/images/OTS-logo.png"></li>
+                    <li class="active">Home</li>
+                    <li class="active">Map</li>
+                    <li class="active">About</li>
+                    <li class="active">Contact</li>
+                </ul>
+            
+        </div>
+        <div class="banner">
+            <div class="app-text">
+                <h1>
+                    OTS - The Occupancy Detection System
+                </h1>
+                <p>
+                    Current Occupancy: {{currentOccupancy}} which is {{OccupancyPercentage}}% full!<br>
+                    Today's Date and Time {{datetime}}
+                </p>
+            </div>
+            <div clas ="app-picture">
+                <img src="">
+            </div>
+        </div>
+    </div>
     </body>
 </html>
