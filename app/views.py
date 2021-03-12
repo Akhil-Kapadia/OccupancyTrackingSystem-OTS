@@ -13,5 +13,5 @@ def home(request):
     {
         "currentOccupancy": currentOccupancy,
         "datetime" : now,
-        'OccupancyPercentage' : currentOccupancy/10000
+        'OccupancyPercentage' : currentOccupancy / 100
     })
