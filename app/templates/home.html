@@ -4,37 +4,69 @@
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="style.css">
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>
             OTS - The Occupancy Detection System
         </title>
     </head>
-    <body>
+    <body> 
         <div class="container">
             <div class="menu">
                 <ul>
-                    <li class="logo"><img src="templates/images/OTS-logo.png"></li>
+                    <li class="logo"><img src="OTS-logo.png"></li>
                     <li class="active">Home</li>
-                    <li class="active">Map</li>
+                    <li class="active">Cameras</li>
                     <li class="active">About</li>
                     <li class="active">Contact</li>
                 </ul>
-            
         </div>
         <div class="banner">
             <div class="app-text">
                 <h1>
                     OTS - The Occupancy Detection System
                 </h1>
+                <br>
                 <p>
                     Current Occupancy: {{currentOccupancy}} which is {{OccupancyPercentage}}% full!<br>
                     Today's Date and Time {{datetime}}
                 </p>
             </div>
-            <div clas ="app-picture">
-                <img src="">
+            <br><br><br><br><br><br><br>
+            <h2>
+                <form action="/#_of_people/" method="post">
+                    <label for="#_of_people">Enter # of people: </label>
+                    <input id="#_of_people" type="int" name="people_field" value="">
+                    <input type="submit" value="Entry">
+                    <input type="submit" value="Exit">
+                </form>
+            </h2>
+            <br>
+            <div clas="app-picture">
+                <img src="max-occupancy.webp">
             </div>
+<!--
+            <div clas="play-btn">
+                <div class="play-btn-inner"><i class="fa fa-play"></i></div>
+                <small><b>Send Data</b></small>
+            </div>
+-->
+            <div clas="quick-links">
+                <br>
+                <ul>
+                    <li><i class="fa fa-share-alt"></i><p>SHARE</p></li>
+                    <li><i class="fa fa-audio-description"></i><p>COVID-19 NEWS</p></li>
+                    <li><i class="fa fa-cog"></i><p>COVID-19 ANALYTICS</p></li>
+                </ul>
+            </div>
+        <div class="social-icons">
+            <ul>
+                <li><a href="#"><i class = "fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class = "fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class = "fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class = "fa fa-instagram"></i></a></li>
+            </ul>
         </div>
+        </div>  
     </div>
     </body>
 </html>
