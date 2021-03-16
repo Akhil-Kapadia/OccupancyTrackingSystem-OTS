@@ -6,7 +6,6 @@ class OccupancyForm(forms.ModelForm):
         model = Occupancy
         fields = [
             'Entry',
-            'People',
-            'CurrentOccupancy'
+            'People'
         ]
         

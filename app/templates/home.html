@@ -33,23 +33,17 @@
             </div>
             <br><br><br><br><br><br><br>
             <h2>
-                <form action="/#_of_people/" method="post">
-                    <label for="#_of_people">Enter # of people: </label>
-                    <input id="#_of_people" type="int" name="people_field" value="">
-                    <input type="submit" value="Entry">
-                    <input type="submit" value="Exit">
+                <form method = 'POST'> 
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type = 'submit'' value ='Submit' />
                 </form>
             </h2>
             <br>
             <div clas="app-picture">
                 <img src="max-occupancy.webp">
             </div>
-<!--
-            <div clas="play-btn">
-                <div class="play-btn-inner"><i class="fa fa-play"></i></div>
-                <small><b>Send Data</b></small>
-            </div>
--->
+
             <div clas="quick-links">
                 <br>
                 <ul>
