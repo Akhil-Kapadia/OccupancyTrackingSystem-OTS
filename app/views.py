@@ -7,16 +7,25 @@ from .models import Occupancy
 from .forms import OccupancyForm
 
 def home(request):
-    currentOccupancy = Occupancy.objects.latest('Time').getOccupancy()
+    #currentOccupancy = Occupancy.objects.latest('Time').getOccupancy()
     now = dt.datetime.now()
 
+    currentOccupancy = 0;
+    entries = Occupancy.objects.filter(Entry = True)
+    exits = Occupancy.objects.filter(Entry = False)
+    for people in entries:
+        currentOccupancy += people.People
+    for people in exits:
+        currentOccupancy -= people.People
+
+
+    # Form for manual entry into db.
     if (request.method == 'POST'):
         form = OccupancyForm(request.POST)
 
         if form.is_valid():
             form.save()
-
-        return redirect('home')
+            return redirect('home')
     else:
         form = OccupancyForm
 
@@ -31,20 +40,6 @@ def home(request):
 
 
 def databaseIN(request, entry, people):
-    obj = Occupancy(Entry = entry, People = people, CurrentOccupancy = Occupancy.objects.latest('Time').getOccupancy() + people)
+    obj = Occupancy(Entry = entry, People = people)
     obj.save()
     return redirect('home')
-
-def buttonForm(request):
-    if (request.method == 'POST'):
-        form = OccupancyForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            form = OccupancyForm()
-
-        return redirect('home')
-    else:
-        form = OccupancyForm
-
-    return render(request, 'form.html', { 'form' : form})
