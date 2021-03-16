@@ -1,8 +1,12 @@
 from django import forms
 from .models import Occupancy
 
-class AddEntry(forms.ModelForm):
+class OccupancyForm(forms.ModelForm):
     class Meta:
         model = Occupancy
-        fields = "__all__"
+        fields = [
+            'Entry',
+            'People',
+            'CurrentOccupancy'
+        ]
         

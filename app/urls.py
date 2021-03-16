@@ -5,6 +5,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name= 'home')
+    path('', views.home, name= 'home'),
+    path('<str:entry>/<int:people>/', views.databaseIN, name = 'entry'),
+    path('/buttonForm/', views.buttonForm, name = 'button-form')
 
 ]
