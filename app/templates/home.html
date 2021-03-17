@@ -1,9 +1,12 @@
+
+{% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" type = "text/css" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>
             OTS - The Occupancy Detection System
@@ -13,7 +16,7 @@
         <div class="container">
             <div class="menu">
                 <ul>
-                    <li class="logo"><img src="OTS-logo.png"></li>
+                    <li class="logo"><img src="{% static 'css/OTS-logo.png' %}"></li>
                     <li class="active">Home</li>
                     <li class="active">Cameras</li>
                     <li class="active">About</li>
@@ -40,12 +43,13 @@
                 </form>
             </h2>
             <br>
+            <!--
             <div clas="app-picture">
-                <img src="max-occupancy.webp">
+                <img src="{% static 'css/max-occupancy.webp' %}">
             </div>
-
+            -->
             <div clas="quick-links">
-                <br>
+                <br><br><br><br><br><br><br><br>
                 <ul>
                     <li><i class="fa fa-share-alt"></i><p>SHARE</p></li>
                     <li><i class="fa fa-audio-description"></i><p>COVID-19 NEWS</p></li>
