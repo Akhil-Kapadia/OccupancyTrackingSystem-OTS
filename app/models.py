@@ -4,11 +4,9 @@ import datetime
 
 class Occupancy(models.Model):
     # Database fields
-    Date = models.DateField(auto_now_add=True)
-    Time = models.DateTimeField(auto_now=True)
+    TimeStamp = models.DateTimeField(auto_now_add=True)
     Entry = models.BooleanField()
     People = models.PositiveSmallIntegerField(default=1)
-    CurrentOccupancy = models.PositiveSmallIntegerField(null=True)
 
     def getOccupancy(self):
         return self.CurrentOccupancy

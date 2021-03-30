@@ -1,40 +1,70 @@
+
+{% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="style.css">
-
+        <link rel="stylesheet" type = "text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>
             OTS - The Occupancy Detection System
         </title>
     </head>
-    <body>
+    <body> 
         <div class="container">
             <div class="menu">
                 <ul>
-                    <li class="logo"><img src="templates/images/OTS-logo.png"></li>
+                    <li class="logo"><img src="{% static 'css/OTS-logo.png' %}"></li>
                     <li class="active">Home</li>
-                    <li class="active">Map</li>
+                    <li class="active">Cameras</li>
                     <li class="active">About</li>
                     <li class="active">Contact</li>
                 </ul>
-            
         </div>
         <div class="banner">
             <div class="app-text">
                 <h1>
                     OTS - The Occupancy Detection System
                 </h1>
+                <br>
                 <p>
                     Current Occupancy: {{currentOccupancy}} which is {{OccupancyPercentage}}% full!<br>
                     Today's Date and Time {{datetime}}
                 </p>
             </div>
-            <div clas ="app-picture">
-                <img src="">
+            <br><br><br><br><br><br><br>
+            <h2>
+                <form method = 'POST'> 
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type = 'submit'' value ='Submit' />
+                </form>
+            </h2>
+            <br>
+            <!--
+            <div clas="app-picture">
+                <img src="{% static 'css/max-occupancy.webp' %}">
             </div>
+            -->
+            <div clas="quick-links">
+                <br><br><br><br><br><br><br><br>
+                <ul>
+                    <li><i class="fa fa-share-alt"></i><p>SHARE</p></li>
+                    <li><i class="fa fa-audio-description"></i><p>COVID-19 NEWS</p></li>
+                    <li><i class="fa fa-cog"></i><p>COVID-19 ANALYTICS</p></li>
+                </ul>
+            </div>
+        <div class="social-icons">
+            <ul>
+                <li><a href="#"><i class = "fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class = "fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class = "fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class = "fa fa-instagram"></i></a></li>
+            </ul>
         </div>
+        </div>  
     </div>
     </body>
 </html>
