@@ -31,7 +31,8 @@
                 <br>
                 <p>
                     Current Occupancy: {{currentOccupancy}} which is {{OccupancyPercentage}}% full!<br>
-                    Today's Date and Time {{datetime}}
+                    Today's Date and Time {{datetime}}<br>
+                    The doors are currently {{door}}!
                 </p>
             </div>
             <br><br><br><br><br><br><br>
@@ -42,6 +43,13 @@
                     <input type = 'submit'' value ='Submit' />
                 </form>
             </h2>
+            <br><br>
+            <h3>
+                <form method = "GET">
+                    {{doors}}
+                    <input type = "submit" value = "Submit">
+                </form>
+            </h3>
             <br>
             <!--
             <div clas="app-picture">
