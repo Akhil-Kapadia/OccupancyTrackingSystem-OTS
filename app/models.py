@@ -13,4 +13,16 @@ class Occupancy(models.Model):
 
     class Meta:
         db_table = "Occupancy"
-    
+
+class Doors(models.Model):
+    CHOICES = (
+        ('OPEN', 'Open Doors'),
+        ('CLOSE', 'Close Doors'),
+        ('RESET', 'Reset Doors')
+    )
+    TimeStamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length = 6, choices = CHOICES)
+
+    class Meta:
+        db_table = 'Doors'
+        get_latest_by = 'TimeStamp'

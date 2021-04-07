@@ -1,5 +1,5 @@
 from django import forms
-from .models import Occupancy
+from .models import Occupancy, Doors
 
 class OccupancyForm(forms.ModelForm):
     class Meta:
@@ -9,11 +9,10 @@ class OccupancyForm(forms.ModelForm):
             'People'
         ]
 
-class Doors(forms.Form):
-    CHOCIES = (
-        ('OPEN', 'Open Doors'),
-        ('CLOSE', 'Close Doors'),
-        ('RESET', 'Reset Doors')
-    )
-    doors = forms.ChoiceField(choices=CHOCIES)
+class DoorForm(forms.ModelForm):
+    class Meta:
+        model = Doors
+        fields = [
+            'status'
+        ]
         

@@ -35,7 +35,7 @@
                     The doors are currently {{door}}!
                 </p>
             </div>
-            <br><br><br><br><br><br><br>
+            <br><br>
             <h2>
                 <form method = 'POST'> 
                     {% csrf_token %}
@@ -45,7 +45,8 @@
             </h2>
             <br><br>
             <h3>
-                <form method = "GET">
+                <form method = "POST">
+                    {% csrf_token %}
                     {{doors}}
                     <input type = "submit" value = "Submit">
                 </form>

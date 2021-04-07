@@ -4,8 +4,8 @@ from django.db import models
 
 # Create your views here.
 import datetime as dt
-from .models import Occupancy
-from .forms import OccupancyForm, Doors
+from .models import Occupancy, Doors
+from .forms import OccupancyForm, DoorForm
 
 
 def home(request):
@@ -21,32 +21,34 @@ def home(request):
     
     percentage = currentOccupancy/17 * 100
 
-    if percentage < 99:
-        door =  'OPEN'
+    doorstatus = Doors.objects.latest().status
+    if doorstatus == 'RESET':
+        door = 'OPEN' if percentage < 99 else 'CLOSE'
+        print('EDS controlled by WebApp System')
     else:
-        door = 'CLOSE'
-    
+        door = doorstatus
+        print('EDS controlled by User')
+        
+        
+       
     
 
     # Form for manual entry into db.
     if (request.method == 'POST'):
+        doors = DoorForm(request.POST)
         form = OccupancyForm(request.POST)
 
+        if doors.is_valid():
+            doors.save()
+            return redirect('home')
+        
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
+        doors = DoorForm
         form = OccupancyForm
     
-    doors = Doors()
-    if request.GET:
-        temp = request.GET['doors']
-        print(temp)
-        if (temp == 'RESET'):
-            door = door 
-        else:
-            door = temp
-
     
     
 

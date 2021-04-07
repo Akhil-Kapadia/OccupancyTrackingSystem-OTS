@@ -1,0 +1,10 @@
+[
+    {
+        "model" : "app.Doors",
+        "pk" : 1,
+        "fields":{
+            "status" : "OPEN",
+            "TimeStamp" : "2013-03-16T17:41:28+00:00"
+        }
+    }
+]
