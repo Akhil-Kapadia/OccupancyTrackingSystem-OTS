@@ -13,6 +13,7 @@ class Occupancy(models.Model):
 
     class Meta:
         db_table = "Occupancy"
+        get_latest_by = 'TimeStamp'
 
 class Doors(models.Model):
     CHOICES = (

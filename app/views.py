@@ -1,11 +1,19 @@
-from django.forms.fields import NullBooleanField
-from django.shortcuts import render, redirect
-from django.db import models
-
 # Create your views here.
+
+from django.db import models
+from django.forms.fields import NullBooleanField
+from django.shortcuts import redirect, render
+#math
+from plotly.offline import plot
+import plotly.express as px
+import plotly.graph_objects as go
 import datetime as dt
-from .models import Occupancy, Doors
-from .forms import OccupancyForm, DoorForm
+import numpy as np
+import pandas as pd
+
+from .forms import DoorForm, OccupancyForm
+from .models import Doors, Occupancy
+from django.http import HttpResponse
 
 
 def home(request):
@@ -68,3 +76,49 @@ def databaseIN(request, entry, people):
     obj.save()
     return redirect('home')
 
+
+#to access this page add /graph to end of url
+def graph(request):
+    #getting data from db
+    test = []
+    samples = 0
+    y = [0]*24
+    occ = 0
+    obj = Occupancy.objects.latest()
+    i = obj.pk
+    while(samples < 100):
+        try:
+            db = Occupancy.objects.get(pk=i)    #Get DB entry if it exists
+        except:
+            break
+        i -= 1
+        today = dt.datetime.now()   #Get current day
+        #See if this DB entry matches today ie Tuesday = Tuesday
+        if db.TimeStamp.strftime("%w") != today.strftime("%w"):
+            continue
+        else:   #Do statistics here
+            if db.Entry:
+                y[db.TimeStamp.hour] = occ + db.People
+            else:
+                y[db.TimeStamp.hour] = occ - db.People
+            occ += y[db.TimeStamp.hour]
+            samples += 1
+            test.append(occ)    #a good way to check data
+    #Plot
+    x = [i for i in range(0,23)]
+    graph = go.Bar(x=x, y=y, name="Todays Occupancy Prediction")
+
+    # Setting layout of the figure.
+    layout = {
+        'title': 'Today\'s Occupancy',
+        'xaxis_title': 'Hour (UTC Military Time)',
+        'yaxis_title': 'Occupancy',
+    }
+
+    # Getting HTML needed to render the plot.
+    plot_div = plot({'data': graph, 'layout': layout}, 
+                    output_type='div')
+
+    #You can change plot_div to test to check the graph, just make sure to fix demo-plot.html
+    return render(request, 'demo-plot.html', 
+                  context={'plot_div': plot_div})
