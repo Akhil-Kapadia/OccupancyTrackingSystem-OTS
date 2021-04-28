@@ -7,6 +7,8 @@ from django.shortcuts import redirect, render
 from plotly.offline import plot
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+from statistics import NormalDist
 import datetime as dt
 import numpy as np
 import pandas as pd
@@ -17,8 +19,8 @@ from django.http import HttpResponse
 
 
 def home(request):
+    # Get current Occuancy and max %
     now = dt.datetime.now()
-
     currentOccupancy = 0;
     entries = Occupancy.objects.filter(Entry = True)
     exits = Occupancy.objects.filter(Entry = False)
@@ -26,9 +28,9 @@ def home(request):
         currentOccupancy += people.People
     for people in exits:
         currentOccupancy -= people.People
-    
     percentage = currentOccupancy/17 * 100
 
+    # Check door status
     doorstatus = Doors.objects.latest().status
     if doorstatus == 'RESET':
         door = 'OPEN' if percentage < 99 else 'CLOSE'
@@ -37,10 +39,6 @@ def home(request):
         door = doorstatus
         print('EDS controlled by User')
         
-        
-       
-    
-
     # Form for manual entry into db.
     if (request.method == 'POST'):
         doors = DoorForm(request.POST)
@@ -76,6 +74,11 @@ def databaseIN(request, entry, people):
     obj.save()
     return redirect('home')
 
+def confidence_interval(data, confidence=0.95):
+  dist = NormalDist.from_samples(data)
+  z = NormalDist().inv_cdf((1 + confidence) / 2.)
+  h = dist.stdev * z / ((len(data) - 1) ** .5)
+  return dist.mean - h, dist.mean + h
 
 #to access this page add /graph to end of url
 def graph(request):
@@ -86,7 +89,7 @@ def graph(request):
     occ = 0
     obj = Occupancy.objects.latest()
     i = obj.pk
-    while(samples < 100):
+    while(samples < 1000):
         try:
             db = Occupancy.objects.get(pk=i)    #Get DB entry if it exists
         except:
@@ -98,16 +101,37 @@ def graph(request):
             continue
         else:   #Do statistics here
             if db.Entry:
-                y[db.TimeStamp.hour] = occ + db.People
-            else:
-                y[db.TimeStamp.hour] = occ - db.People
-            occ += y[db.TimeStamp.hour]
-            samples += 1
-            test.append(occ)    #a good way to check data
-    #Plot
-    x = [i for i in range(0,23)]
-    graph = go.Bar(x=x, y=y, name="Todays Occupancy Prediction")
+                y[db.TimeStamp.hour] +=  db.People  # Add to hr people entered
 
+            else:
+                y[db.TimeStamp.hour] -=  db.People  # Sub to hr people exited
+            samples += 1
+    #Math
+    x = [i for i in range(0,24)]
+    for i, hr in enumerate(y):
+        occ += hr
+        y[i] = np.abs(occ)
+
+    Upper, Lower = confidence_interval(y)
+
+    # Graphing
+    graph = go.Figure(go.Bar(x=x, y=y, name="Todays Occupancy", error_y = dict(
+        type = 'percent',
+        symmetric = False,
+        value = Upper,
+        valueminus = Lower
+    )))
+    graph.update_layout(
+        xaxis = dict(
+            tickmode = 'linear',
+            tick0 = 1,
+            dtick = 1
+        ),
+        title = 'Today\'s Occupancy',
+        xaxis_title = 'Hour (UTC Military Time)',
+        yaxis_title = 'Occupancy'
+    )
+    
     # Setting layout of the figure.
     layout = {
         'title': 'Today\'s Occupancy',
@@ -118,7 +142,7 @@ def graph(request):
     # Getting HTML needed to render the plot.
     plot_div = plot({'data': graph, 'layout': layout}, 
                     output_type='div')
-
+    # plot_div = y
     #You can change plot_div to test to check the graph, just make sure to fix demo-plot.html
-    return render(request, 'demo-plot.html', 
+    return render(request, 'Occupancy Graph.html', 
                   context={'plot_div': plot_div})
